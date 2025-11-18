@@ -143,10 +143,7 @@ const DesktopServicesMenu = memo(
     activeCategory: string;
     onCategoryHover: (id: string) => void;
   }) => {
-    const categories = useMemo(
-      () => SERVICE_NAVIGATION,
-      []
-    );
+    const categories = useMemo(() => SERVICE_NAVIGATION, []);
     const activeCategoryData = useMemo(
       () => categories.find((c) => c.id === activeCategory)!,
       [categories, activeCategory]
@@ -211,14 +208,16 @@ const DesktopServicesMenu = memo(
                     >
                       <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                      <Link
-                        href={subcategory.href}
-                        className="relative z-10 block mb-6"
-                      >
-                        <h3 className="font-bold text-2xl text-primary group-hover:text-primary/80 transition-colors">
-                          {subcategory.title}
-                        </h3>
-                      </Link>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          href={subcategory.href}
+                          className="relative z-10 block mb-6"
+                        >
+                          <h3 className="font-bold text-2xl text-primary group-hover:text-primary/80 transition-colors">
+                            {subcategory.title}
+                          </h3>
+                        </Link>
+                      </NavigationMenuLink>
 
                       <ul className="relative z-10 space-y-4">
                         {subcategory.items.map((item) => (
@@ -320,10 +319,12 @@ const MobileCategorySection = memo(
     category,
     isOpen,
     onToggle,
+    onNavigate,
   }: {
     category: ServiceCategory;
     isOpen: boolean;
     onToggle: (id: string) => void;
+    onNavigate?: () => void;
   }) => (
     <div>
       <button
@@ -348,6 +349,7 @@ const MobileCategorySection = memo(
                 <Link
                   href={subcategory.href}
                   className="text-sm font-semibold text-primary mb-1 block"
+                  onClick={() => onNavigate && onNavigate()}
                 >
                   {subcategory.title}
                 </Link>
@@ -405,6 +407,7 @@ const MobileMenu = memo(
                 category={category}
                 isOpen={state.mobileCategoryOpen === category.id}
                 onToggle={handleCategoryToggle}
+                onNavigate={() => dispatch({ type: "CLOSE_ALL_MOBILE" })}
               />
             ))}
           </MobileAccordion>

@@ -138,7 +138,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t pt-8 text-center text-sm text-muted-foreground">
-          <p>Copyright © OTS Solutions. 2024. All Rights Reserved.</p>
+          <p>Copyright © Klaudey. 2024. All Rights Reserved.</p>
           <p className="mt-2">
             <a
               href="#"
